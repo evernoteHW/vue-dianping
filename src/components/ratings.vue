@@ -1,5 +1,5 @@
 <template>
-	<p>bar</p>
+	<p>ratings</p>
 </template>
 
 <script>

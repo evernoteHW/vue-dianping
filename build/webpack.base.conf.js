@@ -2,6 +2,7 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
+var values = require('postcss-modules-values');
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -22,7 +23,9 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': resolve('src'),
+      'components' : resolve('src/components'),
+      'static': resolve('static'),
     }
   },
   module: {
@@ -61,7 +64,15 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
+      },
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader?modules!postcss-loader",
+        options: {
+          limit: 10000,
+          postcss: values
+        }
+      },
     ]
   }
 }
